@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/UrlShortener/handler"
+	"github.com/UrlShortener/server/handler"
 	"net/http"
 )
 

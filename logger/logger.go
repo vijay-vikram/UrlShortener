@@ -5,7 +5,6 @@ import (
 	"go.uber.org/zap"
 )
 
-// Logger ...
 type Logger interface {
 	Info(tag string, message string, args ...interface{})
 	Error(tag string, message string, args ...interface{})
@@ -16,7 +15,7 @@ type logger struct {
 	ZapClient *zap.SugaredLogger
 }
 
-// Initialize ...
+// TODO:// Create a layer above it, incase in future we decide to change our logging library
 func Initialize(logLevel int) {
 	var zapLogger *zap.Logger
 	// TODO: Handle logs more efficiently
