@@ -1,11 +1,10 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/UrlShortener/logger"
 	"io/ioutil"
-
-	"gitlab.myteksi.net/gophers/go/food/common/encoding/json"
 )
 
 var (
