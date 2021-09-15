@@ -7,6 +7,7 @@ import (
 
 type Logger interface {
 	Info(tag string, message string, args ...interface{})
+	Warn(tag string, message string, args ...interface{})
 	Error(tag string, message string, args ...interface{})
 	Fatal(tag string, message string, args ...interface{})
 }
@@ -40,6 +41,15 @@ func (l *logger) Info(tag string, message string, args ...interface{}) {
 		l.ZapClient.Info(tag, fmt.Sprintf(message, args))
 	} else {
 		l.ZapClient.Info(tag, message)
+	}
+}
+
+//Warn ...
+func (l *logger) Warn(tag string, message string, args ...interface{}) {
+	if len(args) > 0 {
+		l.ZapClient.Warn(tag, fmt.Sprintf(message, args))
+	} else {
+		l.ZapClient.Warn(tag, message)
 	}
 }
 

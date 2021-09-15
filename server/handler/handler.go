@@ -4,7 +4,7 @@ import "net/http"
 
 //URLShortenHandler ...
 type URLShortenHandler interface {
-	Create(http.ResponseWriter, *http.Request)
+	CreateShortUrl(http.ResponseWriter, *http.Request)
 	Get(http.ResponseWriter, *http.Request)
 	Ping(http.ResponseWriter, *http.Request)
 }
