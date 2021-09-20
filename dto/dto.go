@@ -1,5 +1,5 @@
 package dto
 
 type CreateShortUrlRequest struct {
-	Url string
+	Url string `json:"url"`
 }

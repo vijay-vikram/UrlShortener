@@ -1,6 +1,7 @@
 package redis
 
 type RedisStorage interface {
-	Set() int64
+	GetByShortUrl(string) (string, error)
+	SaveFullUrl(string, string) error
 	GetUniqueRange() (int64, int64)
 }

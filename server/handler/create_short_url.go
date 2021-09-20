@@ -12,7 +12,7 @@ import (
 
 func (handler *urlShortenHandler) CreateShortUrl(w http.ResponseWriter, r *http.Request) {
 	var req *dto.CreateShortUrlRequest
-	err := json.NewDecoder(r.Body).Decode(req)
+	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		_ = json.NewEncoder(w).Encode(resterrors.NewBadRequestError(err.Error()))
 		return
@@ -37,5 +37,10 @@ func (handler *urlShortenHandler) CreateShortUrl(w http.ResponseWriter, r *http.
 		return
 	}
 
-	url.CreateShortUrl(req)
+	shortUrl, err := url.CreateShortUrl(req.Url)
+	if err != nil {
+		_ = json.NewEncoder(w).Encode(resterrors.NewInternalServerError(err.Error()))
+	}
+
+	_ = json.NewEncoder(w).Encode(shortUrl)
 }

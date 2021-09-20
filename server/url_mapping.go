@@ -7,7 +7,7 @@ import (
 
 func mapUrls() {
 	urlShortenHandler := handler.NewURLShortenHandler()
-	router.HandleFunc("/shorten", urlShortenHandler.Get).Methods(http.MethodGet)
+	router.HandleFunc("/{key}", urlShortenHandler.Get).Methods(http.MethodGet)
 	router.HandleFunc("/shorten", urlShortenHandler.CreateShortUrl).Methods(http.MethodPost)
 	router.HandleFunc("/ping", urlShortenHandler.Ping).Methods(http.MethodGet)
 }
