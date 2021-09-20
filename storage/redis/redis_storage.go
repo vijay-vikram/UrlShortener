@@ -1,7 +1,7 @@
 package redis
 
 import (
-	"fmt"
+	"github.com/UrlShortener/logger"
 	"github.com/go-redis/redis"
 	"sync"
 )
@@ -32,46 +32,19 @@ func GetRedisStorage() RedisStorage {
 	return redisStorage
 }
 
-var script = `local key = KEYS[1]
-
-local start = 100000
-
-local result = redis.call('GET', key)
-if false == result then
-   redis.call('SET', key, 200000)
-   return start
-end
-
-local newNu = tonumber(result)
-local start2  =  newNu + start
-redis.call('SET', key, start2)
-
-return newNu`
-
 func (r redisStorageImpl) Set() int64 {
-	eval := r.redisClient.Eval(script, []string{"lhhhtytdsssdddddddyh"})
-	result, err := eval.Result()
-	if err != nil {
-		fmt.Print("error*", err)
-		panic(err)
-	}
-	fmt.Println(result)
-	return result.(int64)
+	return 0
 }
 
-func (r redisStorageImpl) Get() string {
-	//val, err := r.redisClient.Get("asss").Result()
-	//if err != nil {
-	//	panic(err)
-	//}
-	//fmt.Println("key 1" , val)
-	//fmt.Println(reflect.TypeOf(val))
-	//val, err = r.redisClient.Set("zx", "ab", 0).Result()
-	//if err != nil {
-	//	panic(err)
-	//}
-	//fmt.Println("key 2" , val)
-	//fmt.Println(reflect.TypeOf(val))
-
-	return "val"
+func (r redisStorageImpl) GetUniqueRange() (int64, int64) {
+	eval := r.redisClient.Eval(getUniqueRangeLuaScript, []string{uniqueRangeKey})
+	result, err := eval.Result()
+	if err != nil {
+		logger.Handler.Error(logTag, "Error while getting unique range fro redis %v", err)
+		panic(err)
+	}
+	rangeStart := result.(int64)
+	// TODO:// get uniqueKeyRangeLength from config
+	rangeEnd := result.(int64) + uniqueKeyRangeLength
+	return rangeStart, rangeEnd
 }

@@ -2,5 +2,5 @@ package redis
 
 type RedisStorage interface {
 	Set() int64
-	Get() string
+	GetUniqueRange() (int64, int64)
 }
