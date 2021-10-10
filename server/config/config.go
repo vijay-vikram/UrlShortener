@@ -21,7 +21,8 @@ type config struct {
 func LoadConfig() {
 
 	// TODO:// get config file path from env var instead of fixed path
-	configJSON, err := ioutil.ReadFile("server/config/config.json")
+	configFile := "config.json"
+	configJSON, err := ioutil.ReadFile(configFile)
 	if err != nil {
 		panic(fmt.Sprintf("Error while loading configs %s", err.Error()))
 	}
